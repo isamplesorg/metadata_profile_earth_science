@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Vocabulary action
-        uses: isamplesorg/vocabularyTemplate@main
+        uses: isamplesorg/metadata_profile_earth_science@main
         # input variables 'action' and 'path' are defined in action.yml, and assigned values here
         # GitHub creates an environment variable for the input with the name INPUT_<VARIABLE_NAME>
         with:
@@ -42,9 +42,9 @@ jobs:
           path: ${{ github.workspace }}
           # provide ttl file names without extensions; the base file name will be 
           #    used for output files with the appropriate extension.
-          inputttl: test_sample_type|test_feature_type
+          inputttl: earthenv_material_extension_mineral_group|earthenv_material_extension_rock_sediment|earthenv_sampled_feature_role|earthenv_specimen_type
           # these are the URIs for the ConceptScheme; there must be a conceptScheme defined in each vocabulary.
-          inputvocaburi: spt:testvocabulary|sft:testfeaturevocabulary
+          inputvocaburi: ming:mineralgroupvocabulary|rksd:rocksedimentvocabulary|essfrole:sfrolevocabulary|esmat:essampletype
 
       - name: Deploy docs
         uses: JamesIves/github-pages-deploy-action@v4
