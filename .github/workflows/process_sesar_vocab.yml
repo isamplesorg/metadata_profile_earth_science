@@ -1,0 +1,66 @@
+# Configure action for processing vocabularies
+# Setup for this action is defined in action.yml
+# This can be run locally using act (https://github.com/nektos/act) like this:
+# act -v -j build --
+# This defines the workflow steps, most critically the values for the 
+#   that will be passed to the Docker Container for use by the python code
+#   inside the container. 
+# Print and echo statments will appear in the workflow log in github when the 
+#   action is executed.
+
+# INSTRUCTIONS
+# --the build/steps/uses value should be the name of your vocabulary repository. 
+#       The @ value in this string specifies the branch that will be used.
+# -- specify the action command in build/steps/with/action. 'docs' will generate 
+#       markdown and HTML;  'uijson' will generate JSON 
+# -- you shouldn't need to change build/steps/with/path
+# -- build/steps/with/inputttl is a single string that is a pipe-delimited list of the 
+#       SKOS vocabulary files in the /vocabulary directory that should be processed. 
+#       leave off the file extensions. NOTE that the files will be assumed to be 
+#       serialized using the Turtle format. Do not enclose the string in quotes, and have no spaces 
+#       in the string
+# -- build/steps/with/inputvocaburi is a single string that is a pipe-delimited list of the 
+#       skos:ConceptScheme URIs in each vocabulary file. The order of the URIS must match 
+#       the order of the file names. It will be assumed that each file contains only one 
+#       ConceptScheme.Do not enclose the string in quotes, and have no spaces in the string.
+#       The URIs must be CURIEs, with the prefix assigned by an @prefix statement in the head 
+#       of the ttl file. 
+
+name: Process vocabularies
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Vocabulary action
+        uses: isamplesorg/metadata_profile_earth_science@main
+        # input variables 'action' and 'path' are defined in action.yml, and assigned values here
+        # GitHub creates an environment variable for the input with the name INPUT_<VARIABLE_NAME>
+        with:
+          action: docs
+          path: ${{ github.workspace }}
+          # provide ttl file names without extensions; the base file name will be 
+          #    used for output files with the appropriate extension. 
+          inputttl: SESAR_material_extension_rock_sediment
+          # these are the URIs for the ConceptScheme; there must be a conceptScheme defined in each vocabulary.
+          inputvocaburi: sesrs:rocksedimentvocabulary
+
+
+      - name: Deploy docs
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: main # The branch the action should deploy to.
+          folder: docs # The folder the action should deploy.
+          target-folder: docs  #push the contents of the deployment folder into a
+                                 # specific directory on the deployment branch
+          commit-message: "new build of vocabulary display files"
+
+      - name: Deploy vocabulary database
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: main # The branch the action should deploy to.
+          folder: cache # The folder the action should deploy.
+          target-folder: cache  #push the contents of the deployment folder into a
+                                 # specific directory on the deployment branch
+          commit-message: "new build of vocabularies.db"
