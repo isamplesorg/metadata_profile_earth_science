@@ -40,12 +40,15 @@ def main(command, path):
 #    command = 'uijson'
     path = '../docs'
 # *******************
-    input1 = "earthenv_material_extension_mineral_group|earthenv_material_extension_rock_sediment|earthenv_sampled_feature_role|earthenv_materialsampleobject_type"
-#    input1 = "earthenv_materialsampleobject_type"
+
+#    input1 = "earthenv_material_extension_mineral_group|earthenv_material_extension_rock_sediment|earthenv_sampled_feature_role|earthenv_materialsampleobject_type"
+    input1 = "SESAR_material_extension_rock_sediment"
     inputttl = input1.split('|')
 # inputttl is a list of skos rdf vocabulary filenames with Turtle serialization
 # vocab_source_dir is the path to the directory that contains the source files
-    input1 = "ming:mineralgroupvocabulary|rksd:rocksedimentvocabulary|essampledfeatrole:sfrolevocabulary|esmat:essampletype"
+#    input1 = "ming:mineralgroupvocabulary|rksd:rocksedimentvocabulary|essampledfeatrole:sfrolevocabulary|esmat:essampletype"
+    input1 = "sesrs:rocksedimentvocabulary"
+
     inputvocaburi = input1.split('|')
 # make sure have cache directory -- this is where the sqlAlchemy db will be
     cachepath = "../cache/vocabularies.db"
@@ -85,11 +88,8 @@ def main(command, path):
 
     #  essfrole_earthenv_sampled_feature_role  spec_earthenv_specimen_type
     if command == "uijson":
-        print("Generating uijson for inclusion in webUI build")
-        index = 0
-        while index < len(inputttl):
-            _run_uijson_in_container(os.path.join(path, inputttl[index] + ".json"), inputvocaburi[index])
-            index += 1
+        print("uijson action has been removed.  json is now fetched dynamically at page load.")
+        sys.exit(-1)
     elif command == "docs":
         print("Generating markdown and html docs")
         index = 0
@@ -134,11 +134,11 @@ def _quarto_render_html(markdown_in: str, output_path: str):
         return 1
 
 
-def _run_uijson_in_container(output_path: str, vocab_type: str):
-    with open(output_path, "w") as f:
-        vocab_args = ["-s", "../cache/vocabularies.db", "uijson", vocab_type, "-e"]
-        _run_python_in_container("vocab.py", vocab_args, f)
-        print(f"Successfully wrote uijson file to {output_path}")
+# def _run_uijson_in_container(output_path: str, vocab_type: str):
+#     with open(output_path, "w") as f:
+#         vocab_args = ["-s", "../cache/vocabularies.db", "uijson", vocab_type, "-e"]
+#         _run_python_in_container("vocab.py", vocab_args, f)
+#         print(f"Successfully wrote uijson file to {output_path}")
 
 
 def _run_docs_in_container(output_path: str, vocab_type: str):

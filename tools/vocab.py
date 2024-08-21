@@ -84,7 +84,7 @@ def getDefaultVocabulary(vs, abbreviate=False):
 @click.group()
 @click.pass_context
 @click.option("-s", "--store", default="vocabularies.db", help="SQLite db for vocabularies" )
-@click.option("--verbosity", default="DEBUG", help="Logging level")
+@click.option("--verbosity", default="INFO", help="Logging level")
 def main(ctx, store, verbosity) -> int:
     verbosity = verbosity.upper()
     logging_config["loggers"][""]["level"] = verbosity

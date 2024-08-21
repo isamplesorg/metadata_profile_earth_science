@@ -73,9 +73,6 @@ LOG_LEVELS = {
     "CRITICAL": logging.CRITICAL,
 }
 
-def getLogger():
-    return logging.getLogger("voc2md")
-
 
 
 NS = {
@@ -95,7 +92,11 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 """
 
 INDENT = "  "
+verbosity = "INFO"
+#control print errors; these will appear in the output markdown file.
 
+def getLogger():
+    return logging.getLogger("vocab2mdCacheV2")
 
 def skosT(term):
     return rdflib.URIRef(f"{NS['skos']}{term}")
@@ -398,7 +399,9 @@ def main(source, vocabulary):
     # res = []
     # res.append(conceptschemelist(vgraph))
 
-    verbosity = "DEBUG".upper()
+    # logging verbosity is set with global varable , at top
+    # when run github action, log statements are in the github action log.
+    # verbosity = "DEBUG".upper()
     logging_config["loggers"][""]["level"] = verbosity
     logging.config.dictConfig(logging_config)
     L = getLogger()
