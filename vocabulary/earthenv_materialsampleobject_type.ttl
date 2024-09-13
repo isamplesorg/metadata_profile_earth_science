@@ -1,10 +1,10 @@
-# baseURI: https://w3id.org/isample/earthenv/esmaterialsample/1.0/essampletype
+# baseURI: https://w3id.org/isample/earthenv/esmaterialsample/essampletype
 # imports: http://purl.org/dc/terms/
 # imports: http://www.w3.org/2004/02/skos/core
 
 @prefix dcterm: <http://purl.org/dc/terms/> .
-@prefix esmat: <https://w3id.org/isample/earthenv/esmaterialsample/1.0/> .
-@prefix msot: <https://w3id.org/isample/vocabulary/materialsampleobjecttype/1.0/> .
+@prefix esmat: <https://w3id.org/isample/earthenv/esmaterialsample/> .
+@prefix msot: <https://w3id.org/isample/vocabulary/materialsampleobjecttype/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -539,7 +539,7 @@ esmat:essampletype
   skos:definition "This concept scheme contains skos concepts for categorizing kinds of Earth Material sample types, extending the iSamples Material Sample Object Type vocabulary. Defintions from SESAR, ODM2, wikipedia, ESS-DIVE, and other sources; sources are cited with each term."@en ;
   skos:historyNote "2023-07-07 SMR add solid material sample and broader relations from classes it subsumes."@en ;
   skos:historyNote "2023-07-27 SMR modify base specimen type vocabulary, add 'Non biologic solid object' to replace 'solid material sample', change broader relations in this vocab to use that as parent class where appropriate. 'Solid material sample' is too closely linked to material type, created confusion. Intention is a specimen category for solid objects that are not biologic. Obviously there is some overlap with Research specimens."@en ;
-  skos:historyNote "2024-07-15 SMR fix import to base vocabulary on renamed material_sample_type vocabulary, change from specimentypevocabulary to materialsampleobjecttype/1.0/conceptscheme"@en ;
+  skos:historyNote "2024-07-15 SMR fix import to base vocabulary on renamed material_sample_type vocabulary, change from specimentypevocabulary to materialsampleobjecttype/conceptscheme"@en ;
   skos:inScheme msot:conceptscheme ;
   skos:prefLabel "Earth and Environmental Science extension -  Material sample type"@en ;
 .

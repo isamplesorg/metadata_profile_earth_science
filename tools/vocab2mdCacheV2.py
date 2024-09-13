@@ -219,16 +219,16 @@ def describeTerm(g, t, depth=0, level=1):
         res.append(f"{hl} {labels[0].strip()}")
         for label in labels[1:]:
             res.append(f"* `{label}`")
-        res.append("")
+#        res.append("")
 
     broader = getObjects(g, t, skosT('broader'))
     if len(broader) > 0:
-        res.append("")
+#        res.append("")
         res.append(f"- Child of:")
         for b in broader:
             bt = b.split('/')[-1]
             res.append(f" [`{bt}`](#{bt})")
-    res.append("")
+#    res.append("")
     # The textual description will be present in rdfs:comment or
     # skos:definition. 
     comments = []
@@ -244,10 +244,10 @@ def describeTerm(g, t, depth=0, level=1):
         res += lines
     seealsos = getObjects(g, t, rdfsT('seeAlso'))
     if len(seealsos) > 0:
-        res.append("")
+#       res.append("")
         res.append(f"- See Also:")
         for seealso in seealsos:
-            res.append(f"* [{seealso.n3(g.namespace_manager)}]({seealso})")
+            res.append(f"  * [{seealso.n3(g.namespace_manager)}]({seealso})")
     altlabels = []
     for altlabel in getObjects(g, t, skosT('altLabel')):
         altlabels.append(altlabel)
@@ -255,11 +255,11 @@ def describeTerm(g, t, depth=0, level=1):
         delimiter = ""
         if len(altlabels) > 1:
             delimiter = ", "
-        res.append("")
+#        res.append("")
         res.append(f"- **Alternate labels:**")
         for altlabel in altlabels:
             res.append(f"{altlabel}{delimiter}")
-        res.append("")
+ #       res.append("")
 
     sources = []
     for source in getObjects(g, t, dctT('source')):
@@ -268,13 +268,13 @@ def describeTerm(g, t, depth=0, level=1):
         delimiter = ""
         if len(sources) > 1:
             delimiter = ", "
-        res.append("")
+#        res.append("")
         res.append(f"- **Source:**")
         for source in sources:
             res.append(f"{source}{delimiter}")
-        res.append("")
+ #       res.append("")
 
-    res.append(f"- Concept URI token: {t.split('/')[-1]}")
+    res.append(f"- Concept URI: {t}")
     res.append("")
 
     return res

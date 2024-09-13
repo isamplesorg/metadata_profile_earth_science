@@ -1,15 +1,15 @@
-# baseURI: https://w3id.org/isample/earthenv/rocksediment/1.0/rocksedimentvocabulary
+# baseURI: https://w3id.org/isample/earthenv/rocksediment/rocksedimentvocabulary
 # imports: http://www.w3.org/2000/01/rdf-schema
 # imports: http://www.w3.org/2004/02/skos/core
 
 @prefix dcterm: <http://purl.org/dc/terms/> .
 @prefix gsoc: <https://w3id.org/gso/common/> .
 @prefix gsrm: <https://w3id.org/gso/rockmaterial/> .
-@prefix mat: <https://w3id.org/isample/vocabulary/material/1.0/> .
+@prefix mat: <https://w3id.org/isample/vocabulary/material/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rksd: <https://w3id.org/isample/earthenv/rocksediment/1.0/> .
+@prefix rksd: <https://w3id.org/isample/earthenv/rocksediment/> .
 @prefix schema: <http://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
