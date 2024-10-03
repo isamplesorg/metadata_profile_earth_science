@@ -1,6 +1,7 @@
 # baseURI: https://w3id.org/isample/earthenv/rocksediment/rocksedimentvocabulary
 # imports: http://www.w3.org/2000/01/rdf-schema
 # imports: http://www.w3.org/2004/02/skos/core
+# imports: https://w3id.org/isample/vocabulary/material/materialsvocabulary
 
 @prefix dcterm: <http://purl.org/dc/terms/> .
 @prefix gsoc: <https://w3id.org/gso/common/> .
@@ -892,8 +893,14 @@ rksd:Volcanic_Rock
   skos:inScheme rksd:rocksedimentvocabulary ;
   skos:note "Hand-sample level evidence for extrusive origin includes vesiculation, inclusion of supracrustal fragments, eutaxitic foliation, bread-crust surfaces; weaker evidence includes glassy texture or fragmentation interpreted to be related to flow or eruption processes.  In many cases, rocks are classified as volcanic based on the context in which they are collected; as such the assignement of volcanic genesis is not based on properties directly observable in the sample."@en ;
   skos:note "This class will overlap with various other classes, including exotic compoistion, fine-grained igneous, glass-rich igneous, intermediate-composition, porphyry, ultrabasic, ultramafic, depending on how much information is available"@en ;
-  skos:prefLabel "volcanic rock "@en ;
   skos:prefLabel "volcanic rock"@en ;
+.
+rksd:animalmaterial
+  rdf:type skos:Concept ;
+  rdfs:label "Animal organic material"@en ;
+  skos:broader mat:organicmaterial ;
+  skos:definition "Organic material produced as part of an animal organism"@en ;
+  skos:prefLabel "Animal organic material"@en ;
 .
 rksd:breccia_gouge_series
   rdf:type skos:Concept ;
@@ -904,6 +911,20 @@ rksd:breccia_gouge_series
   skos:definition "Fault-related material with features such as void spaces (filled or unfilled), or unconsolidated matrix material between fragments, indicating loss of cohesion during deformation. Includes fault-related breccia and gouge."@en ;
   skos:inScheme rksd:rocksedimentvocabulary ;
   skos:prefLabel "breccia gouge series"@en ;
+.
+rksd:otherorganicmaterial
+  rdf:type skos:Concept ;
+  rdfs:label "Organic material produced by other organisms"@en ;
+  skos:broader mat:organicmaterial ;
+  skos:definition "organic material produced by organisms that are not animalia or plantae"@en ;
+  skos:prefLabel "Organic material produced by other organisms"@en ;
+.
+rksd:plantmaterial
+  rdf:type skos:Concept ;
+  rdfs:label "Plant based organic material"@en ;
+  skos:broader mat:organicmaterial ;
+  skos:definition "organic material produced by living plant organisms."@en ;
+  skos:prefLabel "Plant based organic material"@en ;
 .
 rksd:residual_material
   rdf:type skos:Concept ;
@@ -924,27 +945,28 @@ rksd:rocksedimentvocabulary
   dcterm:modified "2024-01-06"^^xsd:date ;
   dcterm:source "<http://resource.geosciml.org/classifierScheme/cgi/2016.01/simplelithology>" ;
   dcterm:source "<https://w3id.org/gso/rockmaterial/ontology>" ;
+  schema:codeRepository <https://github.com/isamplesorg/metadata_profile_earth_science/tree/main/vocabulary> ;
+  schema:funding <AWDID:2004562> ;
+  schema:provider <https://vocabs.ardc.edu.au/> ;
   rdfs:label "Earth and Environmental Science extension - Rock and sediment materials vocabulary"@en ;
   owl:imports <http://www.w3.org/2000/01/rdf-schema> ;
   owl:imports <http://www.w3.org/2004/02/skos/core> ;
+  owl:imports mat:materialsvocabulary ;
   skos:definition "Rock and sediment categories for iSamples materialType classification. Remove anthropogenic materials and classes for consolidated or non-consolidated material; remove leaf classes subjectively based on abundance of material type and number of subclasses. There are 83 'mat:rock' subclasses; these include some classes that are non-consolidated material (e.g. fault gouge) but these are not sediment and adding 'material' classes that are independent of consolidation seems like more overhead than needed. Note that a given material is likely to fit in more that one class; for example the sediment subclasses include compositional classes (e.g. carbonate, clastic) as well as grain size classes (gravel-size sediment). A calcareous ooze sample would be both 'mud-size sediment' and 'carbonate sediment'.   Change owl:class to skos:concept, and rdfs:subClassOf to skos:broader."@en ;
   skos:historyNote "2024-01-06 SMR updates to validate with SHACL rules in isamples/vocab_tools repo; extension vocabulary in skos:inScheme isamples parent voabularty; properties on inherited classes from iSample parent." ;
   skos:prefLabel "Earth and Environmental Science extension - Rock and sediment materials vocabulary"@en ;
-  schema:funding <AWDID:2004562> ;
-  schema:provider <https://vocabs.ardc.edu.au/> ;
-  schema:codeRepository <https://github.com/isamplesorg/metadata_profile_earth_science/tree/main/vocabulary> ;
 .
 mat:rock
+  rdf:type skos:Concept ;
   skos:definition "Consolidated aggregate of particles (grains) of rock, mineral (including native elements), mineraloid, or solid organic material. Includes mineral aggregates such as granite, shale, marble; natural glass such as obsidian; organic material formed by geologic processes such a coal;  extraterrestrial material in meteorites; and  crushed rock fragments like drill cuttings from rock.  (based on http://resource.geosciml.org/classifier/cgi/lithology/rock, same as http://purl.obolibrary.org/obo/ENVO_00001995)"@en ;
   skos:inScheme mat:materialsvocabulary ;
   skos:prefLabel "Rock"@en ;
   skos:topConceptOf rksd:rocksedimentvocabulary ;
-    rdf:type skos:Concept ;
 .
 mat:sediment
+  rdf:type skos:Concept ;
   skos:definition "Solid granular material transported by wind, water, or gravity, not modified by interaction with biosphere or atmosphere (to differentiate from soil). Particles derived by erosion of pre-existing rock, from shell or other body parts from organisms, precipitated chemically in the surficial environment, or generated by explosive volcanic activity. (http://resource.geosciml.org/classifier/cgi/lithology/sediment). Sediment is not consolidated, i.e. Particulate constituents of a compound material do not adhere to each other strongly enough that the aggregate can be considered a solid material in its own right. Similar to http://purl.obolibrary.org/obo/ENVO_00002007"@en ;
   skos:inScheme mat:materialsvocabulary ;
   skos:prefLabel "Sediment"@en ;
   skos:topConceptOf rksd:rocksedimentvocabulary ;
-    rdf:type skos:Concept ;
 .

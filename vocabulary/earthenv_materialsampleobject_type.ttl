@@ -418,15 +418,15 @@ esmat:corehalfround
   skos:inScheme esmat:essampletype ;
   skos:prefLabel "Core half round"@en ;
 .
-esmat:corepeice
+esmat:corepiece
   rdf:type skos:Concept ;
   dcterm:source "https://www.geosamples.org/vocabularies/sample-type-object" ;
   rdfs:isDefinedBy esmat:essampletype ;
-  rdfs:label "Core peice"@en ;
+  rdfs:label "Core piece"@en ;
   skos:broader msot:solidmaterialsample ;
   skos:definition "A cylindrical peice of consolidated earth material extracted as a single solid object between breaks in recovery of core from a borehole. has parent core section"@en ;
   skos:inScheme esmat:essampletype ;
-  skos:prefLabel "Core peice"@en ;
+  skos:prefLabel "Core piece"@en ;
 .
 esmat:corequarterround
   rdf:type skos:Concept ;
