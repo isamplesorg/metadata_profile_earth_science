@@ -528,7 +528,7 @@ esmat:essampletype
   dcterm:contributor <https://orcid.org/0000-0001-6041-5302> ;
   dcterm:created "2023-07-01"^^xsd:date ;
   dcterm:creator <https://orcid.org/0000-0001-6041-5302> ;
-  dcterm:modified "2024-07-15"^^xsd:date ;
+  dcterm:modified "2024-09-13"^^xsd:date ;
   dcterm:publisher "iSamples project" ;
   sdo:codeRepository <https://github.com/isamplesorg/metadata_profile_earth_science/tree/main/vocabulary> ;
   sdo:funding <AWDID:2004562> ;

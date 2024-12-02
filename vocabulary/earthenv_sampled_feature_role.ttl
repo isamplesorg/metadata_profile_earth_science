@@ -11,14 +11,12 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-
 <AWDID:2004562>
   rdf:type schema:Grant ;
   schema:funder <https://ror.org/04nh1dc89> ;
   schema:name "Collaborative Research: Frameworks: Internet of Samples: Toward an Interdisciplinary Cyberinfrastructure for Material Samples" ;
   schema:url "https://nsf.gov/awardsearch/showAward?AWD_ID=2004562" ;
 .
-
 essampledfeatrole:cement
   rdf:type skos:Concept ;
   dcterm:source "This vocabulary" ;
@@ -150,25 +148,26 @@ essampledfeatrole:sampledfeaturepart
   skos:topConceptOf essampledfeatrole:sfrolevocabulary ;
 .
 essampledfeatrole:sfrolevocabulary
+  rdf:type schema:CreativeWork ;
   rdf:type owl:Ontology ;
   rdf:type skos:ConceptScheme ;
-  rdf:type schema:CreativeWork ;
   dcterm:contributor <https://orcid.org/0000-0001-6041-5302> ;
   dcterm:created "2023-11-17"^^xsd:date ;
   dcterm:creator <https://orcid.org/0000-0001-6041-5302> ;
   dcterm:license <https://creativecommons.org/licenses/by/4.0/legalcode> ;
-  dcterm:modified "2023-11-17"^^xsd:date ;
+  dcterm:modified "2024-09-13"^^xsd:date ;
   dcterm:publisher "iSamples project" ;
+  schema:codeRepository <https://github.com/isamplesorg/metadata_profile_earth_science/tree/main/vocabulary> ;
+  schema:funding <AWDID:2004562> ;
+  schema:provider <https://vocabs.ardc.edu.au/> ;
   rdfs:label "Earth and Environmental Science extension - Sampled feature role"@en ;
   owl:imports dcterm: ;
   owl:imports <http://www.w3.org/2004/02/skos/core> ;
   skos:definition "Terms to categorize the relation of a sampled feature to its context. In the Earth Science realm this is typically relation of sampled feature to a containing rock body or rock body part."@en ;
   skos:hasTopConcept essampledfeatrole:sampledfeaturepart ;
   skos:historyNote "2023-11-17 SMR generate to account for sample classifications in SESAR"@en ;
+  skos:historyNote "2024-09-13 SMR remove version number from URI"@en ;
   skos:prefLabel "Earth and Environmental Science extension - Sampled feature role"@en ;
-  schema:funding <AWDID:2004562> ;
-  schema:provider <https://vocabs.ardc.edu.au/> ;
-  schema:codeRepository <https://github.com/isamplesorg/metadata_profile_earth_science/tree/main/vocabulary> ;
 .
 essampledfeatrole:xenolith
   rdf:type skos:Concept ;

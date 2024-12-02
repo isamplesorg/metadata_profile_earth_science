@@ -77,8 +77,11 @@ ming:mineralgroupvocabulary
   dcterm:created "2022-08-27"^^xsd:date ;
   dcterm:creator <https://orcid.org/0000-0001-6041-5302> ;
   dcterm:license <https://creativecommons.org/licenses/by/4.0/legalcode> ;
-  dcterm:modified "2022-08-27"^^xsd:date ;
+  dcterm:modified "2024-09-13"^^xsd:date ;
   dcterm:source "MINERALOGICAL TABLES: by Hugo Strunz and Ernest H. Nickel. E. Schweizerbart’sche Verlagsbuchhandlung, 2002, Stuttgart, Germany (9th edition). 870 p. ISBN number 3-510-65188-X." ;
+  schema:codeRepository <https://github.com/isamplesorg/metadata_profile_earth_science/tree/main/vocabulary> ;
+  schema:funding <AWDID:2004562> ;
+  schema:provider <https://vocabs.ardc.edu.au/> ;
   rdf:seeAlso "https://www.mindat.org/strunz.php" ;
   rdf:seeAlso "https://www.webmineral.com/help/StrunzClass.shtml" ;
   rdfs:label "Earth and Environmental Science extension -  Mineral group vocabulary"@en ;
@@ -86,10 +89,8 @@ ming:mineralgroupvocabulary
   owl:imports mat:materialsvocabulary ;
   skos:definition "Vocabulary to extend the mineral material type category with the top level mineral group categories. Uses the Nickel–Strunz mineral classes, which divide minerals into ten classes according to chemical composition and crystal structure. Nickel-Strunz group 10 is not included because that material would be mat:organiccompounds. Version 10 of the classification is modified from v 9 (Strunz and Nickel,2002) by Jim Ferraiolo and others, and now extended and maintained by mindat.org.  Some scope notes from linked.data.gov.au."@en ;
   skos:hasTopConcept mat:mineral ;
+  skos:historyNote "2024-09-13 SMR remove version number from URI"@en ;
   skos:prefLabel "Earth and Environmental Science extension -  Mineral group vocabulary"@en ;
-  schema:funding <AWDID:2004562> ;
-  schema:provider <https://vocabs.ardc.edu.au/> ;
-  schema:codeRepository <https://github.com/isamplesorg/metadata_profile_earth_science/tree/main/vocabulary> ;
 .
 ming:nativeelementmineral
   rdf:type owl:NamedIndividual ;
@@ -176,11 +177,10 @@ ming:sulfidesulfosaltmineral
   skos:inScheme ming:mineralgroupvocabulary ;
   skos:prefLabel "Mineral-Sulfide or Sulfosalt"@en ;
 .
-
 mat:mineral
   rdf:type skos:Concept ;
+  skos:definition "Material consists of a single mineral or mineraloid phase. .  'A mineral is an element or chemical compound that is normally crystalline and that has been formed as a result of geological processes.' (Nickel, Ernest H. (1995), The definition of a mineral, The Canadian Mineralogist. 33 (3): 689–90). Include mineraloids. ... A material primarily composed of some substance that is naturally occurring, solid and stable at room temperature, representable by a chemical formula, usually abiogenic, and that has an ordered atomic structure. (http://purl.obolibrary.org/obo/ENVO_01000256). Comment: the identity of a mineral species is defined by a crystal structure and a chemical composition that might include various specific elemental substitutions in that structure. Mineraloid: A naturally occurring mineral-like substance that does not demonstrate crystallinity. Mineraloids possess chemical compositions that vary beyond the generally accepted ranges for specific minerals. Examples: obsidian, Opal. (https://en.wikipedia.org/wiki/Mineraloid)"@en ;
   skos:inScheme mat:materialsvocabulary ;
   skos:prefLabel "mineral"@en ;
   skos:topConceptOf ming:mineralgroupvocabulary ;
-  skos:definition "Material consists of a single mineral or mineraloid phase. .  'A mineral is an element or chemical compound that is normally crystalline and that has been formed as a result of geological processes.' (Nickel, Ernest H. (1995), The definition of a mineral, The Canadian Mineralogist. 33 (3): 689–90). Include mineraloids. ... A material primarily composed of some substance that is naturally occurring, solid and stable at room temperature, representable by a chemical formula, usually abiogenic, and that has an ordered atomic structure. (http://purl.obolibrary.org/obo/ENVO_01000256). Comment: the identity of a mineral species is defined by a crystal structure and a chemical composition that might include various specific elemental substitutions in that structure. Mineraloid: A naturally occurring mineral-like substance that does not demonstrate crystallinity. Mineraloids possess chemical compositions that vary beyond the generally accepted ranges for specific minerals. Examples: obsidian, Opal. (https://en.wikipedia.org/wiki/Mineraloid)"@en ;
 .
