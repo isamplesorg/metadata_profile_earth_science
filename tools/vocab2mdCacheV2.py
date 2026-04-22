@@ -127,9 +127,17 @@ def listVocabularies(g):
     return res
 
 def getVocabRoot(g, v):
-    """Get top concept of the specific vocabulary
+    """Get top concepts of the specific vocabulary.
+
+    Accepts both concept->scheme (``skos:topConceptOf``) and
+    scheme->concept (``skos:hasTopConcept``) assertions, since SKOS
+    vocabularies in the wild use either (or both).
     """
-    q = PFX + """SELECT ?s   WHERE { ?s skos:topConceptOf ?vocabulary . }"""
+    q = PFX + """SELECT DISTINCT ?s WHERE {
+        { ?s skos:topConceptOf ?vocabulary . }
+        UNION
+        { ?vocabulary skos:hasTopConcept ?s . }
+    }"""
     qres = g.query(q, initBindings={'vocabulary': v})
     res = []
     for row in qres:
@@ -137,16 +145,29 @@ def getVocabRoot(g, v):
     return res
 
 def getNarrower(g, v, r):
-    q = rdflib.plugins.sparql.prepareQuery(PFX + """SELECT ?s
+    """Return concepts that are skos:broader of r.
+
+    Prefers results scoped by ``skos:inScheme`` but falls back to an
+    unscoped lookup when concepts in the source file omit inScheme
+    assertions (common when the vocabulary relies on topConcept/broader
+    linkage alone).
+    """
+    scoped = rdflib.plugins.sparql.prepareQuery(PFX + """SELECT ?s
     WHERE {
         ?s skos:inScheme ?vocabulary .
         ?s skos:broader ?parent .
     }""")
-    qres = g.query(q, initBindings={'vocabulary': v, 'parent': r})
-    res = []
-    for row in qres:
-        res.append(row[0])
-    return res
+    qres = g.query(scoped, initBindings={'vocabulary': v, 'parent': r})
+    res = [row[0] for row in qres]
+    if res:
+        return res
+
+    unscoped = rdflib.plugins.sparql.prepareQuery(PFX + """SELECT ?s
+    WHERE {
+        ?s skos:broader ?parent .
+    }""")
+    qres = g.query(unscoped, initBindings={'parent': r})
+    return [row[0] for row in qres]
 
 def getObjects(g, s, p):
     L = getLogger()

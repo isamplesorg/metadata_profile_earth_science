@@ -21,9 +21,6 @@ import sys
 
 
 def main():
-#    logging.debug(f"environment variables are {os.environ}")
-#    print(f"environment variables are {os.environ}")
-
     command = os.environ["INPUT_ACTION"]
     print("github_action_main: INPUT_ACTION: ", command)
     path = os.environ["INPUT_PATH"]
@@ -31,23 +28,21 @@ def main():
     input = os.environ["INPUT_INPUTTTL"]
     print(f"inputttl string: {input}")
     inputttl = input.split('|')
-    # inputttl is a list of skos rdf vocabulary filenames with Turtle serialization
-    # vocab_source_dir is the path to the directory that contains the source files
     for filename in inputttl:
-            print(f"files to load: {filename}")
+        print(f"files to load: {filename}")
 
     input = os.environ["INPUT_INPUTVOCABURI"]
     print(f"inputvocaburi string: {input}")
     inputvocaburi = input.split('|')
     for auri in inputvocaburi:
-            print(f"vocab URIs: {auri}")
+        print(f"vocab URIs: {auri}")
 
-    
-    # make sure have cache directory -- this is where the sqlAlchemy db will be         
+    if len(inputttl) != len(inputvocaburi):
+        print(f"inputttl ({len(inputttl)}) and inputvocaburi ({len(inputvocaburi)}) counts do not match. Exiting.")
+        sys.exit(-1)
+
     cachepath = "cache/vocabularies.db"
-    # this is the directory that holds the source SKOS ttl files.
     sourcevocabdir = "vocabulary"
-
 
     print("github_action_main: target path for output: ", path)
     if path is None:
@@ -55,70 +50,74 @@ def main():
         sys.exit(-1)
     if not os.path.exists(path):
         os.makedirs(path)
-        # Change to 777 so subsequent steps that deal with the directory don't run into permissions issues
         os.chmod(path, 777)
         print(f"Created {path} since it didn't exist.")
 
-    # do function of original Makefile here
-  
-    for inputf in inputttl:
-        theindex=0
-        result=load_cachedb(sourcevocabdir + "/" + inputf + ".ttl", cachepath, inputvocaburi[theindex] )
-        if (result == 0):
-           print(f"load_cachedb call successful for: {inputf}, {inputvocaburi[theindex]}")
-        else:
-           print(f"load_cachedb had problem processing: {inputf},{inputvocaburi[theindex]}")
-        theindex = theindex + 1
+    # Process each vocabulary independently with a fresh cache DB so data from
+    # previously-loaded vocabularies cannot pollute queries for the current one.
+    for index, inputf in enumerate(inputttl):
+        voc_uri = inputvocaburi[index]
+        print(f"\n=== Processing {inputf} ({voc_uri}) ===")
 
+        _reset_cache_db(cachepath)
 
-    if command == "uijson":
-        print("Generating uijson for inclusion in webUI build")
-        index = 0
-        while index < len(inputttl):
-            _run_uijson_in_container(os.path.join(path, inputttl[index]+".json"), inputvocaburi[index])
-            index += 1
-    elif command == "docs":
-        print("Generating markdown and html docs")
-        index = 0
-        print(f"input markdown file: {inputttl[index]}, vocab uri: {inputvocaburi[index]}")
-        while index < len(inputttl):
-            result = _run_docs_in_container(os.path.join(path, inputttl[index]+".md"), inputvocaburi[index])
+        ttl_path = os.path.join(sourcevocabdir, inputf + ".ttl")
+        if load_cachedb(ttl_path, cachepath, voc_uri) != 0:
+            print(f"load_cachedb had problem processing: {inputf}, {voc_uri}; skipping")
+            continue
+        print(f"load_cachedb call successful for: {inputf}, {voc_uri}")
+
+        if command == "uijson":
+            print("Generating uijson for inclusion in webUI build")
+            _run_uijson_in_container(os.path.join(path, inputf + ".json"), voc_uri)
+        elif command == "docs":
+            print("Generating markdown and html docs")
+            md_path = os.path.join(path, inputf + ".md")
+            result = _run_docs_in_container(md_path, voc_uri)
             if result == 0:
-                _quarto_render_html((os.path.join(path, inputttl[index]+".md")),path)
+                _quarto_render_html(md_path, path)
             else:
-                print(f"problem with {inputttl[index]}, don't call quarto")
-            index += 1
-    else:
-        print(f"Unknown command {command}.  Exiting.")
-        sys.exit(-1)
+                print(f"problem with {inputf}, don't call quarto")
+        else:
+            print(f"Unknown command {command}.  Exiting.")
+            sys.exit(-1)
+
+
+def _reset_cache_db(cachepath: str):
+    """Delete any prior cache DB file so each vocab starts from a clean store.
+
+    navocab's internal purge path is unreliable (see known issues), so we
+    remove the file here before re-creating it via vocab.py load.
+    """
+    cachedir = os.path.dirname(cachepath)
+    if cachedir and not os.path.exists(cachedir):
+        os.makedirs(cachedir)
+    if os.path.exists(cachepath):
+        try:
+            os.remove(cachepath)
+            print(f"Removed stale cache DB: {cachepath}")
+        except OSError as e:
+            print(f"Could not remove {cachepath}: {e}")
+
 
 def load_cachedb(inputf, cachepath, voc_uri):
-    # tools/vocab.py --verbosity ERROR -s $(CACHE) load $(SRC)/$@
-
     print(f"cachdb file to load: {inputf}")
-    load_args = ["--verbosity","DEBUG", "-s", cachepath, "load", inputf, voc_uri]
+    load_args = ["--verbosity", "DEBUG", "-s", cachepath, "load", inputf, voc_uri]
     result = _run_python_in_container("/app/tools/vocab.py", load_args, f="")
-    if (result == 0):
+    if result == 0:
         print(f"vocab.py.load call successful for {inputf}")
         return 0
-    else:
-        print(f"vocab.py.load had problem processing {inputf}")
-        return 1
-    
+    print(f"vocab.py.load had problem processing {inputf}")
+    return 1
 
-def _quarto_render_html(markdown_in:str, output_path:str):
-#     print("In githubActionMain: Quarto render: ",markdown_in,  output_path)
-#     result = subprocess.run(["/opt/quarto/bin/quarto", "check"])
-#     print("Quarto check result ", result.returncode)
-#  NOTE update quarto location for your local install...
-     result = subprocess.run(["/opt/quarto/bin/quarto", "render", markdown_in, "-t", "html"])
-#     print("Quarto call result ", result.returncode)
-     if (result.returncode == 0):
-         print(f"Quarto call successful for {markdown_in}")
-         return 0
-     else:
-         print(f"Quarto had problem processing {markdown_in}")
-         return 1
+
+def _quarto_render_html(markdown_in: str, output_path: str):
+    result = subprocess.run(["/opt/quarto/bin/quarto", "render", markdown_in, "-t", "html"])
+    if result.returncode == 0:
+        print(f"Quarto call successful for {markdown_in}")
+        return 0
+    print(f"Quarto had problem processing {markdown_in}")
+    return 1
 
 
 def _run_make_in_container(target: str):
@@ -130,35 +129,32 @@ def _run_uijson_in_container(output_path: str, vocab_location: str):
     with open(output_path, "w") as f:
         vocab_args = ["-s", "/app/cache/vocabularies.db", "uijson", vocab_location, "-e"]
         testflag = _run_python_in_container("/app/tools/vocab.py", vocab_args, f)
-        if (testflag == 0):
+        if testflag == 0:
             print(f"Run_uijson: Successfully wrote uijson file to {output_path}")
             return 0
-        else:
-            print(f"problem processing {vocab_location}")
-            return 1
+        print(f"problem processing {vocab_location}")
+        return 1
+
 
 def _run_docs_in_container(output_path: str, vocab_location: str):
     with open(output_path, "w") as f:
         docs_args = ["/app/cache/vocabularies.db", vocab_location]
         testflag = _run_python_in_container("/app/tools/vocab2mdCacheV2.py", docs_args, f)
-        if (testflag == 0):
+        if testflag == 0:
             print(f"Docs in container: Successfully wrote doc file {vocab_location} to {output_path}")
             return 0
-        else:
-            print(f"vocab2mdCacheV2. problem processing {vocab_location}")
-            return 1
+        print(f"vocab2mdCacheV2. problem processing {vocab_location}")
+        return 1
+
 
 def _run_python_in_container(path_to_python_script: str, args: list[str], f):
     subprocess_args = [sys.executable, path_to_python_script]
     subprocess_args.extend(args)
-    if f=="":
+    if f == "":
         result = subprocess.run(subprocess_args)
     else:
         result = subprocess.run(subprocess_args, stdout=f)
-#    print("container call result ", result.returncode)
     return result.returncode
-
-
 
 
 if __name__ == "__main__":

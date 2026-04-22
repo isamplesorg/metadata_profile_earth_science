@@ -1,4 +1,4 @@
-FROM python:3-slim
+FROM python:3.12-slim
 WORKDIR /app
 COPY ./.github/actions/github_action_main.py .
 COPY ./tools ./tools

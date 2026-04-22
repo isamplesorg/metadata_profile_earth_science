@@ -87,10 +87,17 @@ PREFIX rdfs: <{NS['rdfs']}>
         return len(self._g)
 
     def purge_store(self):
-        """Clears out the Sqlite cache."""
-        # added by SMR to enable purge
-        L.debug("purge_store: purging %s", self.store_identifier)
-        graph.destroy(self.storage_uri)
+        """No-op: delete the Sqlite cache file externally instead.
+
+        The previous implementation referenced an undefined ``graph`` local
+        and crashed on invocation. In-place destruction via rdflib-sqlalchemy
+        has been unreliable, so the driver (see github_action_main.py) removes
+        the DB file between vocabularies rather than relying on this method.
+        """
+        L.warning(
+            "purge_store is disabled; delete the sqlite file at %s externally",
+            self.storage_uri,
+        )
 
     def _initialize_store(self, purge=False):
         """Sets up the rdf store using an Sqlite cache."""

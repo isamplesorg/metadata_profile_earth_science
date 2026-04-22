@@ -3,3 +3,4 @@ rdflib
 SQLAlchemy
 rdflib-sqlalchemy
 requests
+setuptools<81
