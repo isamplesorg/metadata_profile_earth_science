@@ -957,6 +957,12 @@ rksd:rocksedimentvocabulary
   skos:historyNote "2024-09-13 SMR remove version number from URI"@en ;
   skos:prefLabel "Earth and Environmental Science extension - Rock and sediment materials vocabulary"@en ;
 .
+mat:anyanthropogenicmaterial
+  skos:relatedMatch <https://www.wikidata.org/wiki/Q116074152> ;
+.
+mat:material
+  rdfs:comment "substance that can occur in different amounts, all with some similar [mixture of some] characteristics, and with which objects can be made (https://www.wikidata.org/wiki/Q214609)"@en ;
+.
 mat:rock
   rdf:type skos:Concept ;
   skos:definition "Consolidated aggregate of particles (grains) of rock, mineral (including native elements), mineraloid, or solid organic material. Includes mineral aggregates such as granite, shale, marble; natural glass such as obsidian; organic material formed by geologic processes such a coal;  extraterrestrial material in meteorites; and  crushed rock fragments like drill cuttings from rock.  (based on http://resource.geosciml.org/classifier/cgi/lithology/rock, same as http://purl.obolibrary.org/obo/ENVO_00001995)"@en ;

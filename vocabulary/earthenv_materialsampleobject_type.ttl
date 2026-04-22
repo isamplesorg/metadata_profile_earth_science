@@ -823,7 +823,7 @@ esmat:slab
   rdfs:label "Slab"@en ;
   skos:broader msot:analyticalpreparation ;
   skos:broader msot:solidmaterialsample ;
-  skos:definition "a relatively planar rock sample,cut from a large sample to produce a tabular peice of rock with the irregular outline of the original sample on the diameter where the cut was mate."@en ;
+  skos:definition "a relatively planar rock sample, cut from a larger sample to produce a tabular peice of rock with the irregular outline of the original sample on the diameter where the cut was made."@en ;
   skos:inScheme esmat:essampletype ;
   skos:prefLabel "Slab"@en ;
 .
