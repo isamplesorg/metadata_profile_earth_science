@@ -1,7 +1,18 @@
 # Vocabulary extensions for EarthScience material samples.
 
 ## Vocabulary documents
-This repository hosts the four extension vocabularies for use with iSamples metadata describing Earth Science material samples: Rock_Sediment, Mineral_Group, material sample object type, and sampled feature role. The authoritative source files are rdf SKOS vocabularies serialized using Turtle syntax. These are in the **vocabulary** folder. The **docs** folder contains Markdown and HTML presentations of the vocabulary content. 
+This repository hosts the four extension vocabularies for use with iSamples metadata describing Earth Science material samples: Rock_Sediment, Mineral_Group, material sample object type, and sampled feature role. The authoritative source files are rdf SKOS vocabularies serialized using Turtle syntax. These are in the **vocabulary** folder. The **docs** folder contains Markdown and HTML presentations of the vocabulary content.
+
+### Rendered documentation
+The rendered vocabulary pages are published at:
+**<http://isamples.org/metadata_profile_earth_science/>** (also reachable via `https://isamplesorg.github.io/metadata_profile_earth_science/`, which 301-redirects there). The landing page is generated from [`docs/readme.md`](docs/readme.md).
+
+| Vocabulary | Source `.ttl` | Concept scheme CURIE | Rendered HTML |
+|---|---|---|---|
+| Mineral group | [`earthenv_material_extension_mineral_group.ttl`](vocabulary/earthenv_material_extension_mineral_group.ttl) | `ming:mineralgroupvocabulary` | [HTML](http://isamples.org/metadata_profile_earth_science/earthenv_material_extension_mineral_group.html) |
+| Rock / sediment | [`earthenv_material_extension_rock_sediment.ttl`](vocabulary/earthenv_material_extension_rock_sediment.ttl) | `rksd:rocksedimentvocabulary` | [HTML](http://isamples.org/metadata_profile_earth_science/earthenv_material_extension_rock_sediment.html) |
+| Sampled feature role | [`earthenv_sampled_feature_role.ttl`](vocabulary/earthenv_sampled_feature_role.ttl) | `essampledfeatrole:sfrolevocabulary` | [HTML](http://isamples.org/metadata_profile_earth_science/earthenv_sampled_feature_role.html) |
+| Material sample object type | [`earthenv_materialsampleobject_type.ttl`](vocabulary/earthenv_materialsampleobject_type.ttl) | `esmat:essampletype` | [HTML](http://isamples.org/metadata_profile_earth_science/earthenv_materialsampleobject_type.html) |
 
 ##  Vocabulary presentation template
 

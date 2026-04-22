@@ -1,5 +1,9 @@
 .idea/
+.claude/
+.venv/
 
+tools/navocab/__pycache__/
 tools/navocab/__pycache__/__init__.cpython-311.pyc
 /cache
 /docs/earthenv_sampled_feature_role_files/libs/quarto-html
+/testoutput/local_run/
