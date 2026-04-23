@@ -16,6 +16,10 @@ inputs:
   path: 
     description: 'Path to the output directory for script output'
     required: true
+  vocabdir:
+    description: 'Repository-relative directory containing the source ttl files for this workflow. Defaults to "vocabulary" for single-vocabulary layouts; set to a different directory name to point the action at a per-topic subfolder.'
+    required: false
+    default: 'vocabulary'
   inputttl:
     description: 'list of skos rdf/turtle files **without** the .ttl extension'
     required: true
@@ -37,3 +41,4 @@ runs:   # see https://docs.github.com/en/actions/creating-actions/metadata-synta
     - ${{ inputs.path }}
     - ${{ inputs.inputttl }}
     - ${{ inputs.inputvocaburi }}
+    - ${{ inputs.vocabdir }}
